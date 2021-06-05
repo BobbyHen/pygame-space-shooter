@@ -22,7 +22,7 @@ MAX_BULLETS = 10
 # CUSTOM EVENTS
 ENEMY_HIT = pygame.USEREVENT = 1
 
-def handle_movement(key_pressed, player):
+def handle_player_movement(key_pressed, player):
     # horizontal movement
     if key_pressed[pygame.K_a] and player.x > 0:
         player.x -= 5
@@ -103,7 +103,7 @@ def main():
                 enemy_health -= 1
 
         key_pressed = pygame.key.get_pressed() # Get key pressed (allows continuous presses)
-        handle_movement(key_pressed, player)
+        handle_player_movement(key_pressed, player)
         handle_shooting(bullets, enemy)
 
         draw_window(player, bullets, enemy, enemy_health, ammo_count)

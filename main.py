@@ -1,12 +1,15 @@
 import pygame
 pygame.font.init()
 
+# MAIN CONSTANTS
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
 SHIP_WIDTH, SHIP_HEIGHT = 50, 50
+
+# FONTS
 WINNING_TEXT_FONT = pygame.font.SysFont('comicsans', 100)
 WINNING_TEXT = 'YOU WON!'
 AMMO_TEXT_FONT = pygame.font.SysFont('comicsans', 50)
@@ -18,6 +21,10 @@ ENEMY_IMAGE = pygame.image.load('assets/satellite_D.png')
 ENEMY_IMAGE_SCALED = pygame.transform.scale(ENEMY_IMAGE, (SHIP_WIDTH, SHIP_HEIGHT))
 BULLET_VELOCITY = 7
 MAX_BULLETS = 10
+
+# SOUND EFFECTS
+PLAYER_LASER = pygame.mixer.Sound('assets/audio/_sf_laser_18.mp3')
+EXPLOSION = pygame.mixer.Sound('assets/audio/_sf_laser_explosion')
 
 # CUSTOM EVENTS
 ENEMY_HIT = pygame.USEREVENT = 1
@@ -37,6 +44,13 @@ def handle_player_movement(key_pressed, player):
     # if key_pressed[pygame.K_s]:
     #     player.y += 5
     #     print("S PRESSED")
+
+def handle_sound(effect):
+    pygame.mixer.Sound.play(effect)
+
+def handle_enemy_movement(enemy, enemy_health): # Needs work!!!!
+    if enemy.x < WIDTH - SHIP_WIDTH:
+        enemy.move_ip(1, 0)
 
 def handle_shooting(bullets, enemy):
     for bullet in bullets:
@@ -104,6 +118,7 @@ def main():
 
         key_pressed = pygame.key.get_pressed() # Get key pressed (allows continuous presses)
         handle_player_movement(key_pressed, player)
+        # handle_enemy_movement(enemy, enemy_health)
         handle_shooting(bullets, enemy)
 
         draw_window(player, bullets, enemy, enemy_health, ammo_count)
